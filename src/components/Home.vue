@@ -6,7 +6,7 @@
                 <div class="laps">Laps: {{ currentLap }} / {{ laps }}</div>
             </div>
             <div class="result-row title">
-                <div class="position">Sija</div>
+                <div class="row position">Pos</div>
                 <div class="row number">Nro.</div>
                 <div class="row lap">Lap</div>
                 <div class="row name">Name</div>
@@ -120,14 +120,14 @@ export default {
     .laps-row {
         padding-bottom: 15px;
         padding-top: 15px;
-        font-size: 20px;
+        font-size: 15px;
         background-color: red;
         color: white;
     }
 
     .row {
         display: flex;
-        margin: 15px;
+        margin: 10px;
     }
 
     .position, .number, .lap {

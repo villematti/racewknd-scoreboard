@@ -1,11 +1,15 @@
 <template>
   <div id="app">
-    <iframe width="100%" height="315" src="https://www.youtube.com/embed/3-0TkT6CvgE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-    <Home
-      v-for="start in starts"
-      v-bind:key="start.id"
-      v-bind:start="start"
-    />
+    <div class="video">
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/3-0TkT6CvgE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+    <div class="results">
+      <Home
+        v-for="start in starts"
+        v-bind:key="start.id"
+        v-bind:start="start"
+      />
+    </div>
   </div>
 </template>
 
@@ -43,5 +47,15 @@ export default {
 </script>
 
 <style>
-
+  .video {
+    display: flex;
+    flex: 5;
+  }
+  .results {
+    display: flex;
+    flex: 7;
+    flex-direction: column;
+    overflow-y: scroll;
+    height: 500px;
+  }
 </style>

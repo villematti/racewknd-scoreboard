@@ -1,6 +1,6 @@
 <template>
     <div :class="positionClass" class="result-row">
-        <div class="position">{{ driver.position }}</div>
+        <div class="row position">{{ driver.position }}</div>
         <div class="row number">{{ driver.number }}</div>
         <div class="row lap">{{ driver.currentLap }}</div>
         <div class="row name">{{ dr.firstName }} {{ dr.lastName }}</div>
@@ -83,7 +83,7 @@ export default {
 
     .row {
         display: flex;
-        margin: 15px;
+        margin: 10px;
     }
 
     .position, .number, .lap {
@@ -118,5 +118,11 @@ export default {
     }
     .other {
         background-color: lightyellow;
+    }
+
+    @media screen and (max-width: 850px) {
+        .row {
+            font-size: 10px;
+        }
     }
 </style>
