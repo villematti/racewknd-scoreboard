@@ -12,6 +12,7 @@
                 <div class="row name">Name</div>
                 <div class="row last-lap">Last lap</div>
                 <div class="row best-lap">Best lap</div>
+                <div class="row current-time">Time</div>
             </div>
             <result-row
                 v-for="driver in competitors"
@@ -47,6 +48,7 @@ export default {
 
     socket.on(`standings_${this.start.id}`, (res) => {
         this.competitors = res;
+        this.checkCurrentTime();
         this.getCurrentLap();
     });
 
@@ -62,6 +64,7 @@ export default {
 
             this.getData(url, data).then(response => {
                 this.competitors = response;
+                this.checkCurrentTime()
                 this.getCurrentLap();
             })
 
@@ -90,6 +93,18 @@ export default {
                   this.currentLap = c.currentLap;
               }
           })
+      },
+      checkCurrentTime() {
+          const leader = this.competitors.filter(c => c.position);
+          this.competitors = this.competitors.map(c => {
+              if (c.position !== 1) {
+                  c.timeBehind = c.currentTime - leader[0].currentTime;
+                if (c.currentTime === 0 || c.timeBehind < 0) {
+                    c.timeBehind = "Na";
+                }
+              }
+              return c;
+          });
       }
   }
 }
@@ -142,7 +157,7 @@ export default {
         flex: 5;
     }
 
-    .last-lap {
+    .last-lap, .current-time {
         display: flex;
         flex: 5;
     }

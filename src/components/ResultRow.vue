@@ -6,6 +6,8 @@
         <div class="row name">{{ dr.firstName }} {{ dr.lastName }}</div>
         <div class="row last-lap">{{ createTimeString(driver.lastLapTime) }}</div>
         <div class="row best-lap">{{ createTimeString(driver.bestLapTime) }}</div>
+        <div class="row current-time">{{ calculateTotalTime(driver) }}</div>
+
     </div>
 </template>
 
@@ -48,7 +50,18 @@ export default {
         const secs = s % 60;
         s = (s - secs) / 60;
         const mins = s % 60;
-        return `${mins}min. ${secs}sek. ${ms}ms.`;
+        const minTime = mins ? `${mins}min.` : "";
+        return `${minTime} ${secs}sek. ${ms}ms.`;
+      },
+      calculateTotalTime(driver) {
+          if (driver.position === 1) {
+              return this.createTimeString(driver.currentTime);
+          } else {
+              if (driver.timeBehind === "Na") {
+                  return "Na";
+              }
+              return `+ ${this.createTimeString(driver.timeBehind)}`;
+          }
       }
   },
   computed: {
@@ -94,7 +107,7 @@ export default {
         flex: 1;
     }
 
-    .last-lap {
+    .last-lap, .current-time {
         display: flex;
         flex: 5;
     }
