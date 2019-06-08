@@ -24,10 +24,7 @@
 </template>
 
 <script>
-import socketio from 'socket.io-client';
 import ResultRow from './ResultRow.vue';
-
-const socket = socketio('https://racewkndapp.com');
 
 export default {
   name: 'Home',
@@ -43,19 +40,17 @@ export default {
     }
   },
   mounted: function () {
-    socket.on("connect", () => {});
     this.getInitial();
 
-    socket.on(`standings_${this.start.id}`, (res) => {
+    this.$socket.on(`standings_${this.start.id}`, (res) => {
         this.competitors = res;
         this.checkCurrentTime();
         this.getCurrentLap();
     });
 
     setTimeout(() => {
-        socket.emit("subscribeToLaptimes", this.start.id);
+        this.$socket.emit("subscribeToLaptimes", this.start.id);
     }, 500);
-    
   },
   methods: {
       getInitial() {

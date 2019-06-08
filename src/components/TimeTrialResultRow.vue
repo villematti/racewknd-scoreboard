@@ -2,19 +2,16 @@
     <div :class="positionClass" class="result-row">
         <div class="row position">{{ driver.position }}</div>
         <div class="row number">{{ driver.number }}</div>
-        <div class="row lap">{{ driver.currentLap }}</div>
         <div class="row name">{{ dr.firstName }} {{ dr.lastName }}</div>
         <div class="row last-lap">{{ createTimeString(driver.lastLapTime) }}</div>
-        <div class="row best-lap">{{ createTimeString(driver.bestLapTime) }}</div>
-        <div class="row current-time">{{ calculateTotalTime(driver) }}</div>
-
+        <div class="row best-lap">{{ calculateTotalTime(driver) }}</div>
     </div>
 </template>
 
 <script>
 
 export default {
-  name: 'Home',
+  name: 'TimeTrialResultRow',
   props: ["driver"],
   data: () => {
       return {
@@ -96,8 +93,7 @@ export default {
         margin: 10px;
     }
 
-    .position, .number, .lap {
-        display: flex;
+    .position, .number {
         width: 50px;
         justify-content: center;
         align-items: center;
