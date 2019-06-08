@@ -53,7 +53,8 @@ export default {
         this.starts = result;
       })
       .catch(error => console.error('Error:', error));
-    
+
+      this.$ga.page('/');
   },
   computed: {
     heatStarts() {
