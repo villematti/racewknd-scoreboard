@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="video">
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/I3aEautK4cg" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/kxBfTrdg95c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="results">
       <Home
@@ -20,7 +20,7 @@ export default {
   name: 'app',
   data() {
     return {
-      raceId: "ac10e5e7-e981-46bd-8a00-aba54294f551",
+      raceId: "8bf10761-5115-4bdc-8b0b-0f3af4e3b37e",
       starts: [],
       selected: ""
     };
