@@ -6,13 +6,11 @@
                 <div class="laps">Laps: {{ currentLap }} / {{ laps }}</div>
             </div>
             <div class="result-row title">
-                <div class="row position">Pos</div>
+                <div class="position">Sija</div>
                 <div class="row number">Nro.</div>
                 <div class="row lap">Lap</div>
                 <div class="row name">Name</div>
-                <div class="row last-lap">Last lap</div>
                 <div class="row best-lap">Best lap</div>
-                <div class="row current-time">Time</div>
             </div>
             <result-row
                 v-for="driver in competitors"
@@ -47,8 +45,24 @@ export default {
     this.getInitial();
 
     socket.on(`standings_${this.start.id}`, (res) => {
-        this.competitors = res;
-        this.checkCurrentTime();
+        this.competitors = this.orderTimetrial(res);
+        this.competitors = this.competitors.map((c, i) => {
+            c.position = i;
+            if (c.bestLapTime === 0) {
+                c.position = this.competitors.length;
+            }
+
+            return c;
+        });
+        this.competitors.sort((a, b) => {
+            if (a.position < b.position) {
+                return -1;
+            }
+
+            if (a.position > b.position) {
+                return 1;
+            }
+        });
         this.getCurrentLap();
     });
 
@@ -63,8 +77,24 @@ export default {
             const data = {startId: this.start.id};
 
             this.getData(url, data).then(response => {
-                this.competitors = response;
-                this.checkCurrentTime()
+                this.competitors = this.orderTimetrial(response);
+                this.competitors = this.competitors.map((c, i) => {
+                    c.position = i - this.getPositionFormIndex() + 1;
+                    if (c.bestLapTime === 0) {
+                        c.position = this.competitors.length;
+                    }
+
+                    return c;
+                });
+                this.competitors.sort((a, b) => {
+                    if (a.position < b.position) {
+                        return -1;
+                    }
+
+                    if (a.position > b.position) {
+                        return 1;
+                    }
+                });
                 this.getCurrentLap();
             })
 
@@ -94,17 +124,21 @@ export default {
               }
           })
       },
-      checkCurrentTime() {
-          const leader = this.competitors.filter(c => c.position);
-          this.competitors = this.competitors.map(c => {
-              if (c.position !== 1) {
-                  c.timeBehind = c.currentTime - leader[0].currentTime;
-                if (c.currentTime === 0 || c.timeBehind < 0) {
-                    c.timeBehind = "Na";
-                }
+      orderTimetrial(comps) {
+          comps.sort((a, b) => {
+              if (a.bestLapTime < b.bestLapTime) {
+                  return -1;
               }
-              return c;
+
+              if (a.bestLapTime > b.bestLapTime) {
+                  return 1;
+              }
           });
+          return comps;
+      },
+      getPositionFormIndex() {
+          const missing = this.competitors.filter(c => c.bestLapTime === 0);
+          return missing.length;
       }
   }
 }
@@ -135,14 +169,14 @@ export default {
     .laps-row {
         padding-bottom: 15px;
         padding-top: 15px;
-        font-size: 15px;
+        font-size: 20px;
         background-color: red;
         color: white;
     }
 
     .row {
         display: flex;
-        margin: 10px;
+        margin: 15px;
     }
 
     .position, .number, .lap {
@@ -157,7 +191,7 @@ export default {
         flex: 5;
     }
 
-    .last-lap, .current-time {
+    .last-lap {
         display: flex;
         flex: 5;
     }
