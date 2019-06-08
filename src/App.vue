@@ -4,8 +4,18 @@
       <iframe width="100%" height="315" src="https://www.youtube.com/embed/kxBfTrdg95c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="results">
+      <TimeTrials
+        v-for="start in timeTrialStarts"
+        v-bind:key="start.id"
+        v-bind:start="start"
+      />
       <Home
-        v-for="start in starts"
+        v-for="start in heatStarts"
+        v-bind:key="start.id"
+        v-bind:start="start"
+      />
+      <TimeTrials
+        v-for="start in practiceStarts"
         v-bind:key="start.id"
         v-bind:start="start"
       />
@@ -15,6 +25,7 @@
 
 <script>
 import Home from './components/Home.vue'
+import TimeTrials from './components/TimeTrials.vue'
 
 export default {
   name: 'app',
@@ -26,7 +37,8 @@ export default {
     };
   },
   components: {
-    Home
+    Home,
+    TimeTrials
   },
   mounted: function() {
     const raceData = {id: this.raceId}
@@ -42,6 +54,59 @@ export default {
       })
       .catch(error => console.error('Error:', error));
     
+  },
+  computed: {
+    heatStarts() {
+      return this.starts
+        .filter(s => s.raceType === '7a75ac61-201a-42c0-a39a-9864000e3a3a')
+        .sort((a,b) => {
+          if (a.classId > b.classId) {
+            return -1;
+          }
+
+          if (a.classId < b.classId) {
+            return 1;
+          }
+
+          if (a.classId === b.classId) {
+            return 0;
+          }
+        });
+    },
+    timeTrialStarts() {
+      return this.starts
+        .filter(s => s.raceType === 'b4a7d532-127c-4c5c-b5de-a0b77bde83b7')
+        .sort((a,b) => {
+          if (a.classId > b.classId) {
+            return -1;
+          }
+
+          if (a.classId < b.classId) {
+            return 1;
+          }
+
+          if (a.classId === b.classId) {
+            return 0;
+          }
+        });
+    },
+    practiceStarts() {
+      return this.starts
+        .filter(s => s.raceType === '71a85952-5096-4001-aff6-1d4c2a935a35')
+        .sort((a,b) => {
+          if (a.classId > b.classId) {
+            return -1;
+          }
+
+          if (a.classId < b.classId) {
+            return 1;
+          }
+
+          if (a.classId === b.classId) {
+            return 0;
+          }
+        });
+    }
   }
 }
 </script>
