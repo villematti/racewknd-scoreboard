@@ -49,7 +49,7 @@ export default {
       },
       calculateTotalTime(driver) {
           if (driver.position === 1) {
-              return this.createTimeString(driver.currentTime);
+              return this.createTimeString(driver.currentTime || 0);
           } else {
               if (driver.timeBehind === "Na") {
                   return "Na";

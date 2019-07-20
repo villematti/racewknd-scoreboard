@@ -6,7 +6,10 @@
         <div class="row name">{{ dr.firstName }} {{ dr.lastName }}</div>
         <div class="row last-lap">{{ createTimeString(driver.lastLapTime) }}</div>
         <div class="row best-lap">{{ createTimeString(driver.bestLapTime) }}</div>
-        <div class="row current-time">{{ calculateTotalTime(driver) }}</div>
+        <div class="row current-time">
+            <p>{{ calculateTotalTime(driver) }}</p>
+            <p>{{ driver.explain }}</p>
+        </div>
 
     </div>
 </template>
@@ -48,6 +51,7 @@ export default {
         s = (s - secs) / 60;
         const mins = s % 60;
         const minTime = mins ? `${mins}min.` : "";
+        
         return `${minTime} ${secs}sek. ${ms}ms.`;
       },
       calculateTotalTime(driver) {
@@ -55,9 +59,31 @@ export default {
               return this.createTimeString(driver.currentTime);
           } else {
               if (driver.timeBehind === "Na") {
-                  return "Na";
+                  let value = "";
+                  if (driver.dns) {
+                    value = "DNS";
+                  }
+                  if (driver.dnq) {
+                    value = "DNQ";
+                  }
+                  if (driver.dnf) {
+                    value = "DNF";
+                  }
+                  if (driver.dsq) {
+                    value = "DSQ";
+                  }
+                  if (driver.acc) {
+                    value = "ACC";
+                  }
+                  if (driver.dnr) {
+                    value = "DNR";
+                  }
+                  return value;
+              } else if (typeof driver.timeBehind === "string") {
+
+                  return driver.timeBehind;
               }
-              return `+ ${this.createTimeString(driver.timeBehind)}`;
+              return `${this.createTimeString(driver.currentTime)}`;
           }
       }
   },

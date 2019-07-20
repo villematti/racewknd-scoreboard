@@ -90,14 +90,21 @@ export default {
           })
       },
       checkCurrentTime() {
-          const leader = this.competitors.filter(c => c.position);
+          const leader = this.competitors.filter(c => c.position === 1);
           this.competitors = this.competitors.map(c => {
+              if (c.position === 1) {
+                  c.currentTime = c.currentTime - this.start.startTime;
+              }
               if (c.position !== 1) {
+                  c.currentTime = c.currentTime - this.start.startTime;
                   c.timeBehind = c.currentTime - leader[0].currentTime;
                 if (c.currentTime === 0 || c.timeBehind < 0) {
                     c.timeBehind = "Na";
+                } else if (c.currentTime !== 0) {
+                    c.timeBehind = c.currentLapTime;
                 }
               }
+              
               return c;
           });
       }

@@ -16,9 +16,11 @@ Vue.config.productionTip = false
 new Vue({
   el: "racewknd-standings",
   mounted() {
-    this.$socket.on("ping", () => {
-      console.log("ping!");
-      this.$socket.emit("PING");
+    this.$socket.on("connect", () => {
+      console.log("Connected");
+    })
+    this.$socket.on("disconnect", (reason) => {
+      console.log("Disconnected: ", reason);
     });
   },
   render: h => h(App),

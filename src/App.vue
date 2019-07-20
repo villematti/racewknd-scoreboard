@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="video">
-      <iframe width="100%" height="315" src="https://www.youtube.com/embed/kxBfTrdg95c" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      <iframe width="100%" height="315" src="https://www.youtube.com/embed/qnl8slQO0-Y" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     </div>
     <div class="results">
       <TimeTrials
@@ -31,7 +31,7 @@ export default {
   name: 'app',
   data() {
     return {
-      raceId: "8bf10761-5115-4bdc-8b0b-0f3af4e3b37e",
+      raceId: "a8f8a1e0-2de4-494b-a0bd-a5a2d4fb7017",
       starts: [],
       selected: ""
     };
@@ -52,7 +52,7 @@ export default {
       .then(result => {
         this.starts = result;
       })
-      .catch(error => console.error('Error:', error));
+      .catch(error => console.error("Error: ", error));
 
       this.$ga.page('/');
   },
@@ -122,7 +122,7 @@ export default {
     flex: 7;
     flex-direction: column;
     overflow-y: scroll;
-    height: 500px;
+    height: 550%;
   }
 
   @media screen and (max-width: 850px) {
